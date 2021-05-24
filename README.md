@@ -34,10 +34,16 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/nownabe/erlang_config_parser.
+This is a fork of https://github.com/nownabe/erlang_config_parser for my own usage.
+Bug reports and pull requests are welcome on GitHub at https://github.com/elrisco/erlang_config_parser.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
+## Links
+
+* https://erlang.org/doc/reference_manual/expressions.html#bit_syntax
+* https://erlang.org/doc/programming_examples/bit_syntax.html#constructing-binaries-and-bitstrings
 
