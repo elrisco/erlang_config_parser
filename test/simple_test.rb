@@ -41,5 +41,20 @@ class SimpleTest < Minitest::Test
     assert_equal exp, parse('[ { aaa, 1, 2.34, "bbb" } ].')
   end
 
+  def test_bin_string_empty
+    exp = [ "" ]
+    assert_equal exp, parse('[ <<>> ].')
+  end
+
+  def test_bin_string_empty_string
+    exp = [ "" ]
+    assert_equal exp, parse('[ <<"">> ].')
+  end
+
+  def test_bin_string_empty_text
+    exp = [ "aaa b cc" ]
+    assert_equal exp, parse('[ <<"aaa b cc">> ].')
+  end
+
 end
 
