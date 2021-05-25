@@ -4,24 +4,25 @@ ErlangConfigParser can parse Erlang configs to Ruby objects.
 
 ## Installation
 
+This fork is not in rubygems so you need to get it from the git repository
+
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'erlang_config_parser'
+gem 'erlang_config_parser' git: 'https://github.com/elrisco/erlang_config_parser.git', branch: 'bin-string'
 ```
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install erlang_config_parser
 
 ## Usage
 
 ```ruby
 require "erlang_config_parser"
+
+erlang_config_string = '[ [ ape, banana ], [ circus, 12345 ] ]'
 
 configs = ErlangConfigParser.parse(erlang_config_string)
 ```
