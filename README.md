@@ -46,4 +46,5 @@ The gem is available as open source under the terms of the [MIT License](http://
 
 * https://erlang.org/doc/reference_manual/expressions.html#bit_syntax
 * https://erlang.org/doc/programming_examples/bit_syntax.html#constructing-binaries-and-bitstrings
+* https://erlang.org/documentation/doc-12.1/doc/reference_manual/data_types.html#bit-strings-and-binaries
 

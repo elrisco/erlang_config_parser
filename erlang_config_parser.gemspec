@@ -6,11 +6,11 @@ require 'erlang_config_parser/version'
 Gem::Specification.new do |spec|
   spec.name          = "erlang_config_parser"
   spec.version       = ErlangConfigParser::VERSION
-  spec.authors       = ["nownabe"]
-  spec.email         = ["nownabe@gmail.com"]
+  spec.authors       = ["elrisco"]
+  spec.email         = ["elrisco@gmail.com"]
 
   spec.summary       = %q{ErlangConfigParser can parse Erlang configs into Ruby objects.}
-  spec.homepage      = "https://github.com/nownabe/erlang_config_parser"
+  spec.homepage      = "https://github.com/elrisco/erlang_config_parser"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
