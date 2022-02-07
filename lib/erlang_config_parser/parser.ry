@@ -15,6 +15,7 @@ rule
   element   : list
             | tuple
             | ATOM                           { result = val[0].to_sym }
+            | BIT_STRING                     { result = val[0] }
             | STRING                         { result = val[0] }
             | INTEGER                        { result = val[0].to_i }
             | FLOAT                          { result = val[0].to_f }
@@ -30,6 +31,7 @@ def parse(str)
   @tokens = []
 
   until ss.eos?
+    ss.scan(/<<"((?:[^"\\]|\\.)*)">>/)    ? @tokens << [:BIT_STRING,  ss[1]] :
     ss.scan(/"((?:[^"\\]|\\.)*)"/)        ? @tokens << [:STRING,      ss[1]] :
     ss.scan(/[+-]?\d+\.\d+(?:e[+-]\d+)?/) ? @tokens << [:FLOAT,       ss.matched] :
     ss.scan(/[+-]?\d+/)                   ? @tokens << [:INTEGER,     ss.matched] :
@@ -38,11 +40,11 @@ def parse(str)
     ss.scan(/{/)                          ? @tokens << [:TUPLE_BEGIN, ss.matched] :
     ss.scan(/}/)                          ? @tokens << [:TUPLE_END,   ss.matched] :
     ss.scan(/'((?:[^'\\]|\\.)*)'/)        ? @tokens << [:ATOM,        ss[1]] :
-    ss.scan(/[a-z][\w_@]*/)               ? @tokens << [:ATOM,        ss.matched] :
+    ss.scan(/[a-z][\w@]*/)                ? @tokens << [:ATOM,        ss.matched] :
     ss.scan(/,/)                          ? @tokens << [:COMMA,       ss.matched] :
     ss.scan(/\s/)                         ? nil :
     ss.scan(/\./)                         ? break :
-    (raise "scanner error")
+    (raise "scanner error at '%s'" % ss.peek(20))
   end
 
   do_parse

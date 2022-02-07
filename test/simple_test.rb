@@ -27,8 +27,13 @@ class SimpleTest < Minitest::Test
   end
 
   def test_strings
-    exp = [ "aaa", "bb", "cccc", "d dd d"]
+    exp = [ "aaa", "bb", "cccc", "d dd d" ]
     assert_equal exp, parse('[ "aaa", "bb", "cccc", "d dd d" ].')
+  end
+
+  def test_bit_strings
+    exp = [ "aaa" , "b b"]
+    assert_equal exp, parse('[ <<"aaa">>, <<"b b">> ].')
   end
 
   def test_tuple_empty
