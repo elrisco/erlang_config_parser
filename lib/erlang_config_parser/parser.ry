@@ -1,10 +1,19 @@
 class ErlangConfigParser::Parser
 rule
   statement : list
+            | map
             | tuple
 
   list      : LIST_BEGIN elements LIST_END   { result = val[1] }
             | LIST_BEGIN LIST_END            { result = [] }
+
+  map       : MAP_BEGIN TUPLE_END               { result = {} }
+            | MAP_BEGIN associations TUPLE_END  { result = val[1].inject({}) {|h,(k,v)| h[k]=v ; h} }
+  
+  associations : association                    { result = [ val[0] ]}
+               | associations COMMA association { result << val[2] }
+
+  association : element ARROW element        { result = [ val[0], val[2] ] }
 
   tuple     : TUPLE_BEGIN elements TUPLE_END { result = val[1] }
             | TUPLE_BEGIN TUPLE_END          { result = [] }
@@ -13,6 +22,7 @@ rule
             | elements COMMA element         { result << val[2]  }
 
   element   : list
+            | map
             | tuple
             | ATOM                           { result = val[0].to_sym }
             | BIT_STRING                     { result = val[0] }
@@ -37,8 +47,10 @@ def parse(str)
     ss.scan(/[+-]?\d+/)                   ? @tokens << [:INTEGER,     ss.matched] :
     ss.scan(/\[/)                         ? @tokens << [:LIST_BEGIN,  ss.matched] :
     ss.scan(/\]/)                         ? @tokens << [:LIST_END,    ss.matched] :
+    ss.scan(/\#{/)                        ? @tokens << [:MAP_BEGIN,   ss.matched] :
     ss.scan(/{/)                          ? @tokens << [:TUPLE_BEGIN, ss.matched] :
     ss.scan(/}/)                          ? @tokens << [:TUPLE_END,   ss.matched] :
+    ss.scan(/=>/)                         ? @tokens << [:ARROW,       ss.matched] :
     ss.scan(/'((?:[^'\\]|\\.)*)'/)        ? @tokens << [:ATOM,        ss[1]] :
     ss.scan(/[a-z][\w@]*/)                ? @tokens << [:ATOM,        ss.matched] :
     ss.scan(/,/)                          ? @tokens << [:COMMA,       ss.matched] :

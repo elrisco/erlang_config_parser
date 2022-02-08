@@ -36,6 +36,21 @@ class SimpleTest < Minitest::Test
     assert_equal exp, parse('[ <<"aaa">>, <<"b b">> ].')
   end
 
+  def test_map_empty
+    exp = { }
+    assert_equal exp, parse(' #{ }.')
+  end
+
+  def test_map
+    exp = {:a => 2 }
+    assert_equal exp, parse('#{ a => 2 } .')
+  end
+
+  def test_map_list
+    exp = {:a => 2, :b => 4 }
+    assert_equal exp, parse('#{ a => 2 , b => 4} .')
+  end
+
   def test_tuple_empty
     exp = [ [] ]
     assert_equal exp, parse('[ { } ].')

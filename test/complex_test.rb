@@ -60,5 +60,14 @@ class ComplexTest < Minitest::Test
     assert_equal exp, parse('[ aaa, { }, [ bbb, ccc ], ddd, { eee, [fff, [ ggg, {hhh}]] }].')
   end
 
+  def test_list_with_maps
+    exp = [ {a: 1}, {b: 2, c:3}]
+    assert_equal exp, parse('[ #{ a=>1}, #{ b => 2,c=> 3 } ].')
+  end
+
+  def test_maps_with_complex_keys
+    exp = { [:a, 1] => 2, [:b,:c,:d] => 4, {e: 5} => 6}
+    assert_equal exp, parse('#{ [a,1] => 2, {b,c,d} => 4, #{e => 5} => 6 }.')
+  end
 end
 
